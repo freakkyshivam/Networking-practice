@@ -5,13 +5,17 @@ const HOST = '127.0.0.1';
 
 const client = net.createConnection({port : PORT, host : HOST}, ()=>{
     console.log("Client connected to the server");
-    client.write("Hello, from client")
+
+    setInterval(() => {
+        client.write("Hello, from client")
+    }, 2000);
+    
 })
 
 
 client.on("data", (data)=>{
     console.log(`Get msg from server ${data.toString()}`);
-    client.end();
+    // client.end();
 })
 
 client.on("end", ()=>{

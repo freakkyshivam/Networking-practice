@@ -8,11 +8,11 @@ const server = net.createServer((socket)=>{
     socket.on('data', (data)=>{
         console.log(`New message from client ${data.toString()}`);
         
-        socket.write(`Server Echo: ${data}`);
+        socket.write(`Get msg from serevr : Hello from server`);
     })
     
     socket.on('end', ()=>{
-        console.log("CLient disconnected");
+        console.log("CLlent disconnected");
     })
 
     socket.on('error', (err)=>{
