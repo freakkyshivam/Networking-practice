@@ -16,7 +16,7 @@ const server = net.createServer((socket)=>{
     })
 
     socket.on('error', (err)=>{
-        console.log("TCP connect server error : ", err);
+        console.log("TCP connection server error : ", err.message);
     })
 });
 

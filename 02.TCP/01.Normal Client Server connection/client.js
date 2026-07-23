@@ -1,13 +1,16 @@
 import net from 'node:net';
 
 const PORT = 4252;
-const HOST = '127.0.0.1';
+const HOST = '192.0.0.2'
 
 const client = net.createConnection({port : PORT, host : HOST}, ()=>{
     console.log("Client connected to the server");
 
     setInterval(() => {
-        client.write("Hello, from client")
+        client.write(JSON.stringify({
+            type : "laptop_2",
+            name : "Shiavm"
+        }))
     }, 2000);
     
 })
