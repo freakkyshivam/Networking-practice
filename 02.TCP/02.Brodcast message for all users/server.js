@@ -3,6 +3,10 @@
 
 const clients = [];
 
+function removeClient(socket) {
+  return clients.filter(c => c != socket)
+}
+
 const server = net.createServer((socket)=>{
 
     const clientId = `${socket.remoteAddress}:${socket.remotePort}`;
@@ -19,7 +23,11 @@ const server = net.createServer((socket)=>{
 
         clients?.forEach(client=>{
             if(client !== sender){
-                socket.write(msg)
+                // kewal  usi client ko msg jayega jisne msg kiya ho
+                // socket.write(msg)
+
+                // sabhi ko msg jayega
+                client.write(msg);
             }
         })
     }
@@ -27,11 +35,12 @@ const server = net.createServer((socket)=>{
     brodcast(`User ${clientId}, joined to the chat`, socket);
 
     socket.on('data', (data)=>{
-        brodcast(`${clientId} : ${data}`)
+        brodcast(`${clientId} : ${data}`, socket)
     })
 
     socket.on('end', ()=>{
         console.log(`Client ${clientId} are disconnected`);
+         removeClient(socket)
     })
 
      socket.on('error', (err) => {
