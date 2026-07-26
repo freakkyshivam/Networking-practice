@@ -1,7 +1,7 @@
 
  import net from 'node:net'
 
-const clients = [];
+let clients = [];
 
 function removeClient(socket) {
   return clients.filter(c => c != socket)
@@ -40,7 +40,7 @@ const server = net.createServer((socket)=>{
 
     socket.on('end', ()=>{
         console.log(`Client ${clientId} are disconnected`);
-         removeClient(socket)
+        clients = removeClient(socket)
     })
 
      socket.on('error', (err) => {
