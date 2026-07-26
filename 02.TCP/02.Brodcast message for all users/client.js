@@ -1,7 +1,7 @@
 import net from 'node:net';
 
 const PORT = 8080;
-const HOST = '127.0.0.1';
+const HOST = '0.0.0.0';
 
 const client = net.createConnection({port : PORT, host : HOST}, ()=>{
     console.log("Client connected to the server");

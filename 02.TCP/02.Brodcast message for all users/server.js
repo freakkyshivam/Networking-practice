@@ -40,7 +40,7 @@ const server = net.createServer((socket)=>{
     
 })
 
-server.listen(8080, "127.0.0.1", ()=>{
+server.listen(8080, "0.0.0.0", ()=>{
     console.log('Server listen at : 8080');
 })
 
