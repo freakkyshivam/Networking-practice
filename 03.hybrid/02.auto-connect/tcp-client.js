@@ -8,21 +8,21 @@ export const connectToDevice = (device) => {
     port: device.tcpPort,
   });
 
-  socket.on("connect", () => {
+  client.on("connect", () => {
     console.log(`TCP connected to ${device.sessionId}`);
   });
 
-  socket.on("data", (data) => {
+  client.on("data", (data) => {
     console.log(`Msg Received: ${data.toString()}`);
   });
 
-  socket.on("close", () => {
+  client.on("close", () => {
     console.log(`TCP connection closed: ${device.sessionId}`);
   });
 
-  socket.on("error", (err) => {
+  client.on("error", (err) => {
     console.log(`TCP connection error: ${err.message}`);
   });
 
-  return socket;
+  return client;
 };
