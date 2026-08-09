@@ -7,10 +7,13 @@ import {
   getDevices
 } from './discovery-registery.js'
 
+const TCP_PORT = 8080;
+
+export const startDeviceDiscovery= ()=>{
+
 const socket = dgram.createSocket("udp4");
 
 const sessionId = crypto.randomUUID();
-const TCP_PORT = 8080;
 
 socket.on("listening", () => {
   socket.setBroadcast(true);
@@ -24,7 +27,7 @@ socket.on("listening", () => {
   setInterval(() => {
   socket.send(msg, 4242, "255.255.255.255", (err) => {
     if (err) {
-      console.error(" Socket Error: ", err);
+      console.error(" UDP Socket Error: ", err);
       socket.close();
     }
   });
@@ -32,7 +35,7 @@ socket.on("listening", () => {
   },3000);
 
   const address = socket.address();
-  console.log(`UDP server running ${address.address}:${address.port}`);
+  console.log(`UDP device dicovery server running ${address.address}:${address.port}`);
 });
 
 socket.on("message", (msg, rinfo) => {
@@ -49,7 +52,7 @@ socket.on("message", (msg, rinfo) => {
       udpPort: rinfo.port,
       udpAddress: rinfo.address,
       udpFamily: rinfo.family,
-      lastSeen: new Date(),
+      lastSeen: Date.now(),
     });
 
 
@@ -59,7 +62,7 @@ socket.on("message", (msg, rinfo) => {
 });
 
 setInterval(() => {
-  const now = new Date();
+  const now = Date.now();
 
   const devices = getDevices()
   for (const [id, device] of devices) {
@@ -71,8 +74,10 @@ setInterval(() => {
 }, 3000);
 
 socket.on("error", (err) => {
-  console.log("UDP socket error : ", err);
+  console.log("UDP device discovery socket error : ", err);
   socket.close();
 });
 
 socket.bind(4242);
+
+}
