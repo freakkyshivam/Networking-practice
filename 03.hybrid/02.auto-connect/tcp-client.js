@@ -1,4 +1,5 @@
 import net from "node:net";
+import {connections} from './index.js'
 
 export const connectToDevice = (device) => {
   console.log(`Connecting to ${device.udpAddress}:${device.tcpPort}`);
@@ -18,6 +19,7 @@ export const connectToDevice = (device) => {
 
   client.on("close", () => {
     console.log(`TCP connection closed: ${device.sessionId}`);
+    connections.delete(device.sessionId);
   });
 
   client.on("error", (err) => {

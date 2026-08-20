@@ -7,9 +7,8 @@ import {
   getDevices
 } from './discovery-registery.js'
 
-const TCP_PORT = 8080;
-
-export const startDeviceDiscovery= ()=>{
+ 
+export const startDeviceDiscovery= (UDP_PORT, TCP_PORT)=>{
 
 const socket = dgram.createSocket("udp4");
 
@@ -25,7 +24,7 @@ socket.on("listening", () => {
 });
 
   setInterval(() => {
-  socket.send(msg, 4242, "255.255.255.255", (err) => {
+  socket.send(msg, UDP_PORT, "255.255.255.255", (err) => {
     if (err) {
       console.error(" UDP Socket Error: ", err);
       socket.close();
@@ -78,6 +77,6 @@ socket.on("error", (err) => {
   socket.close();
 });
 
-socket.bind(4242);
+socket.bind(UDP_PORT);
 
 }

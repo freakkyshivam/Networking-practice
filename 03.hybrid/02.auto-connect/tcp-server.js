@@ -1,8 +1,7 @@
 import net from 'node:net';
 
-const TCP_PORT = 8080;
 
-export const strartTcpServer = ()=>{
+export const strartTcpServer = (TCP_PORT)=>{
 
     const server = net.createServer(socket=>{
         const clientId = `${socket.remoteAddress}:${socket.remotePort}`;
